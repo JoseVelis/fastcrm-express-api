@@ -2,6 +2,12 @@ import { Templates } from "../models/templateModel.js";
 
 export async function getAllTemplates(req, res) {
     try {
+        const {query} = req.query || {} ;
+        let filter = {}
+        if (q) filter = {
+            content : { $regex: q, $options: 'i' }
+
+        }
         const templates = await Templates.find({});
         res.status(200).json(templates);
     } catch (e) {
@@ -15,6 +21,7 @@ export async function createTemplate(req, res) {
         content: content,
         author: author
     });
-    newTemplate.create
+
     return res.status(201).json({template: newTemplate});
 }
+
