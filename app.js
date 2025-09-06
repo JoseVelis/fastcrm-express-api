@@ -2,7 +2,8 @@ import express, { json } from "express"
 import mongoose from "mongoose";
 import morgan from "morgan";
 
-import {checkIndexes } from 
+import {checkIndexes } from "./models/templateModel.js";
+
 
 import { templateRoutes } from "./routes/templateRoutes.js";
 import { contactRoutes } from "./routes/contactRoutes.js";
