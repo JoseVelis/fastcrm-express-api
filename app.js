@@ -2,7 +2,10 @@ import express, { json } from "express"
 import mongoose from "mongoose";
 import morgan from "morgan";
 
-import { templateRoutes } from "./routes/templateRoutes.js"
+import {checkIndexes } from 
+
+import { templateRoutes } from "./routes/templateRoutes.js";
+import { contactRoutes } from "./routes/contactRoutes.js";
 
 const app = express();
 
@@ -29,6 +32,7 @@ app.get("/", (req, res) => {
     return res.json({ message: "FastCRM Express API" })
 })
 
-app.use("/api", templateRoutes);
+app.use("/api/templates", templateRoutes);
+app.use("/api/contacts", contactRoutes);
 
 app.listen(PORT, () => console.log("🟢 Vivo en el puerto: " + PORT))

@@ -3,6 +3,6 @@ import { createTemplate, getAllTemplates } from "../controllers/templateControll
 
 export const templateRoutes = Router();
 
-templateRoutes.get("/templates", getAllTemplates); 
-templateRoutes.post("/templates", createTemplate);
-templateRoutes.put("/:id", updateTemplate) ; //actualiza template
+templateRoutes.get("/templates", getAllTemplates);  // GET: /api/templates/
+templateRoutes.post("/templates", createTemplate); // POST: /api/templates/
+templateRoutes.put("/:id", updateTemplate) ; // PUT: /api/templates/:id
