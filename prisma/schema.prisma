@@ -8,11 +8,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Company {
+  id        Int      @id @default(autoincrement())
+  name      String
+  ruc       String
+  createdAt DateTime @default(now())
+  contacts  Contact[]
+}
+
 model Contact {
-  id        Int   @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   name      String
   whatsapp  String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  companyId Int?
+  company   Company? @relation(fields: [companyId], references: [id])
 }
 

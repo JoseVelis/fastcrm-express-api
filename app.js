@@ -1,12 +1,10 @@
 import express, { json } from "express"
-import mongoose from "mongoose";
 import morgan from "morgan";
-
-import {checkIndexes } from "./models/templateModel.js";
-
+import prisma from "./lib/db.js";
 
 import { templateRoutes } from "./routes/templateRoutes.js";
 import { contactRoutes } from "./routes/contactRoutes.js";
+import { companyRoutes } from "./routes/companyRoutes.js";
 
 const app = express();
 
@@ -19,15 +17,14 @@ const PORT = 5100;
     await process.loadEnvFile('.env');
 })();
 
-const mongodb_url = process.env.MONGODB_URL || '';
-
-// Connect to MongoDB
-mongoose.connect(mongodb_url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(() => console.log('🟢 MongoDB connected'))
-    .catch(err => console.log(err));
+// Conectar a Prisma/Neon
+try {
+    await prisma.$connect();
+    console.log('🟢 Prisma conectado a Neon PostgreSQL');
+} catch (error) {
+    console.error('❌ Error conectando a la base de datos:', error);
+    process.exit(1);
+}
 
 app.get("/", (req, res) => {
     return res.json({ message: "FastCRM Express API" })
@@ -35,5 +32,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/templates", templateRoutes);
 app.use("/api/contacts", contactRoutes);
+app.use("/api/companies", companyRoutes);
 
 app.listen(PORT, () => console.log("🟢 Vivo en el puerto: " + PORT))
